@@ -1,4 +1,4 @@
-import { secret } from '../config'
+import { secret } from '@/config'
 import { expressjwt } from 'express-jwt'
 
 function jwt() {

@@ -1,7 +1,7 @@
 import { Router } from 'express'
-import Controller from '../auth/auth.controller'
-import { LoginDTO, RegisterDTO } from '../../dto'
-import RequestValidator from '../../middlewares/request-validator'
+import Controller from './auth.controller'
+import { LoginDTO, RegisterDTO } from '@/dto'
+import { RequestValidator } from '@/middlewares'
 
 const auth: Router = Router()
 const controller = new Controller()

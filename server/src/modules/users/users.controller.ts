@@ -1,9 +1,9 @@
-import { User } from '@prisma/client'
-import { type NextFunction, type Request } from 'express'
-import UserService from './users.service'
-import Api from '../../lib/api'
-import { HttpStatusCode } from 'axios'
+import Api from '@/lib/api'
 import { CustomRequest, CustomResponse } from '@/types'
+import { User } from '@prisma/client'
+import { HttpStatusCode } from 'axios'
+import { type NextFunction } from 'express'
+import UserService from './users.service'
 
 export default class UserController extends Api {
   private readonly userService = new UserService()

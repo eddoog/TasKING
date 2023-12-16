@@ -2,7 +2,7 @@ import { CustomResponse } from '@/types/common.type'
 import { User } from '@prisma/client'
 import { HttpStatusCode } from 'axios'
 import { type NextFunction, type Request } from 'express'
-import Api from '../../lib/api'
+import Api from '@/lib/api'
 import AuthService from './auth.service'
 
 export default class AuthController extends Api {

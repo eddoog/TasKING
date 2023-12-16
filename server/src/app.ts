@@ -1,5 +1,6 @@
-import { jwt, prisma as prismaClient } from './lib'
-import errorHandler from './middlewares/error-handler'
+import { unless } from 'express-unless'
+import { prisma as prismaClient } from './lib'
+import { errorHandler, jwt, userValidator } from './middlewares'
 import routes from './modules/index'
 import cors from 'cors'
 import express from 'express'
@@ -24,6 +25,9 @@ class App {
     this.express.use(express.urlencoded({ extended: true }))
     this.express.use(cors())
     this.express.use(jwt())
+    this.express.use(
+      userValidator.unless({ path: ['/auth/login', '/auth/register'] })
+    )
   }
 
   private setErrorHandler(): void {

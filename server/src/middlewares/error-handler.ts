@@ -27,4 +27,4 @@ const errorHandler = (
   next()
 }
 
-export default errorHandler
+export { errorHandler }

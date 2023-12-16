@@ -1,6 +1,6 @@
-import { secret } from '../../config'
-import { LoginDTO, RegisterDTO } from '../../dto'
-import { compare, hash, prisma, HttpBadRequestError } from '../../lib'
+import { secret } from '@/config'
+import { LoginDTO, RegisterDTO } from '@/dto'
+import { compare, prisma, hash, HttpBadRequestError } from '@/lib'
 import jwt from 'jsonwebtoken'
 
 export default class AuthService {

@@ -1,4 +1,4 @@
-import { prisma } from '../../lib'
+import { prisma } from '@/lib'
 
 export default class UserService {
   public async getUser(id: string) {

@@ -1,9 +1,9 @@
-import { HttpBadRequestError } from '../lib'
+import { HttpBadRequestError } from '@/lib'
 import { type ClassConstructor, plainToInstance } from 'class-transformer'
 import { validate } from 'class-validator'
 import { type Request, type Response, type NextFunction } from 'express'
 
-export default class RequestValidator {
+class RequestValidator {
   static validate = <T>(classInstance: ClassConstructor<T>) => {
     return async (req: Request, _res: Response, next: NextFunction) => {
       const validationErrorText = 'Request validation failed!'
@@ -32,3 +32,5 @@ export default class RequestValidator {
     }
   }
 }
+
+export { RequestValidator }
