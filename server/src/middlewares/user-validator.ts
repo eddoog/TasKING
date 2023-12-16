@@ -1,4 +1,4 @@
-import { prisma } from '@/lib'
+import { HttpBadRequestError, prisma } from '@/lib'
 import { CustomRequest } from '@/types'
 import { NextFunction, Response } from 'express'
 import { unless } from 'express-unless'
@@ -15,14 +15,14 @@ const userValidator = async (
 
   const user = await prisma.user.findUnique({
     where: {
-      id: req.auth.id,
+      id: 'blablabla',
     },
   })
 
   if (!user) {
-    res.status(401).send('Unauthorized, user not found.').end()
+    const err = new HttpBadRequestError('Unauthorized, user not found')
 
-    return
+    next(err)
   }
 
   return next()
