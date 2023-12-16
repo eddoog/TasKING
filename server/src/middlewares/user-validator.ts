@@ -15,7 +15,7 @@ const userValidator = async (
 
   const user = await prisma.user.findUnique({
     where: {
-      id: 'blablabla',
+      id: req.auth.id,
     },
   })
 
