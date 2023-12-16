@@ -1,6 +1,6 @@
 import { type ApiError } from '@/lib/errors'
 import { HttpStatusCode } from 'axios'
-import { type NextFunction, type Response } from 'express'
+import { type NextFunction, type Request, type Response } from 'express'
 
 interface ErrorBody {
   success: false
@@ -9,7 +9,12 @@ interface ErrorBody {
   stack?: string
 }
 
-const errorHandler = (err: ApiError, res: Response, next: NextFunction) => {
+const errorHandler = (
+  err: ApiError,
+  _req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const status: number = err.statusCode ?? HttpStatusCode.InternalServerError
   const errorBody: ErrorBody = {
     success: false,

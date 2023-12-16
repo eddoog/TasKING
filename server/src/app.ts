@@ -1,4 +1,5 @@
-import prismaClient from './lib/prisma'
+import { jwt, prisma as prismaClient } from './lib'
+import errorHandler from './middlewares/error-handler'
 import routes from './modules/index'
 import cors from 'cors'
 import express from 'express'
@@ -8,20 +9,28 @@ class App {
 
   constructor() {
     this.express = express()
+    this.init()
   }
 
-  public async init(): Promise<void> {
-    this.middlewares()
-    this.routes()
+  private async init(): Promise<void> {
+    this.setMiddlewares()
+    this.setRoutes()
+    this.setErrorHandler()
     this.connectPrisma()
   }
 
-  private middlewares(): void {
+  private setMiddlewares(): void {
     this.express.use(express.json())
+    this.express.use(express.urlencoded({ extended: true }))
     this.express.use(cors())
+    this.express.use(jwt())
   }
 
-  private routes(): void {
+  private setErrorHandler(): void {
+    this.express.use(errorHandler)
+  }
+
+  private setRoutes(): void {
     this.express.use(routes)
   }
 

@@ -1,26 +1,26 @@
-import { CustomResponse } from '@/types/common.type'
 import { User } from '@prisma/client'
 import { type NextFunction, type Request } from 'express'
 import UserService from './users.service'
 import Api from '../../lib/api'
 import { HttpStatusCode } from 'axios'
+import { CustomRequest, CustomResponse } from '@/types'
 
 export default class UserController extends Api {
   private readonly userService = new UserService()
 
-  public createUser = async (
-    req: Request,
+  public getUser = async (
+    req: CustomRequest,
     res: CustomResponse<User>,
     next: NextFunction
   ) => {
     try {
-      const user = this.userService.createUser(req.body)
+      const user = await this.userService.getUser(req.auth.id)
 
       return this.send(
         res,
         user,
-        HttpStatusCode.Created,
-        'User has been created successfully'
+        HttpStatusCode.Ok,
+        'User fetched successfully'
       )
     } catch (error) {
       next(error)

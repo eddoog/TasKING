@@ -1,9 +1,17 @@
-import { type User } from '@prisma/client'
-import prisma from '../../lib/prisma'
+import { prisma } from '../../lib'
 
 export default class UserService {
-  public async createUser(data: User) {
-    const user = await prisma.user.create({ data })
+  public async getUser(id: string) {
+    const user = await prisma.user.findUnique({
+      where: {
+        id,
+      },
+    })
+
+    if (!user) {
+      throw new Error('User not found')
+    }
+
     return user
   }
 }

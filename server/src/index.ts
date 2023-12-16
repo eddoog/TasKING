@@ -1,6 +1,6 @@
 import { config as configDotenv } from 'dotenv'
 import server from './server'
-import prisma from './lib/prisma'
+import { prisma } from './lib'
 
 configDotenv()
 
