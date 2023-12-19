@@ -1,5 +1,16 @@
 import { Transform, TransformFnParams } from 'class-transformer'
-import { IsDateString, IsNotEmpty, IsOptional, IsString } from 'class-validator'
+import {
+  IsDateString,
+  IsEnum,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from 'class-validator'
+
+enum TaskStatus {
+  INCOMPLETE = 'INCOMPLETE',
+  COMPLETE = 'COMPLETE',
+}
 
 class CreateTaskDTO {
   @IsNotEmpty()
@@ -19,6 +30,11 @@ class CreateTaskDTO {
   @IsNotEmpty()
   @IsDateString()
   dueDate: Date
+
+  @IsOptional()
+  @IsNotEmpty()
+  @IsEnum(TaskStatus)
+  status?: TaskStatus
 }
 
 class UpdateTaskDTO {
@@ -42,6 +58,11 @@ class UpdateTaskDTO {
   @IsNotEmpty()
   @IsDateString()
   dueDate?: Date
+
+  @IsOptional()
+  @IsNotEmpty()
+  @IsEnum(TaskStatus)
+  status?: TaskStatus
 }
 
 export { CreateTaskDTO, UpdateTaskDTO }

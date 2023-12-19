@@ -40,6 +40,7 @@ export default class TaskService {
       data: {
         name,
         description,
+        ...(dto.status && { status: dto.status }),
         dueDate,
         userId,
       },
