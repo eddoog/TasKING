@@ -1,6 +1,55 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+  font-family: "Nunito", sans-serif;
+}
+
+body {
+  @apply bg-[#181818] text-white;
+}
+
+.grid-temp {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.border-bg2 {
+  border: 2px solid rgba(249, 249, 249, 0.08);
+}
+
+.border-sidebar {
+  border-top: 2px solid rgba(249, 249, 249, 0.08);
+  border-right: 2px solid rgba(249, 249, 249, 0.08);
+  border-bottom: 2px solid rgba(249, 249, 249, 0.08);
+}
+
+.transition-sidebar {
+  transition: all 0.3s cubic-bezier(0.53, 0.21, 0, 1);
+}
+
+::-webkit-scrollbar {
+  width: 15px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #d6dee1;
+  border-radius: 15px;
+  border: 6px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #a8bbbf;
+}
 
 @layer base {
   :root {
