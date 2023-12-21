@@ -1,6 +1,6 @@
-import "./App.css";
-import { Sidebar } from "./components/Sidebar";
-import { Tasks } from "./components/Tasks";
+import "./App.css"
+import { Sidebar } from "./components/Sidebar"
+import { Tasks } from "./components/Tasks"
 
 function App() {
   return (
@@ -8,7 +8,7 @@ function App() {
       <Sidebar />
       <Tasks title={"All Tasks"} />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

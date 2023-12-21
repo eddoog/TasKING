@@ -1,39 +1,38 @@
-import { useMediaQuery } from "@/hooks/useMediaQuery";
-import { ReactNode, createContext, useEffect, useState } from "react";
+import { useMediaQuery } from "@/hooks/useMediaQuery"
+import { ReactNode, createContext, useEffect, useState } from "react"
 
 type GlobalProviderProps = {
-  children: ReactNode;
-};
+  children: ReactNode
+}
 
 type GlobalContextValue = {
-  collapsed: boolean;
-  toggleMenu: () => void;
-};
+  collapsed: boolean
+  isTarget: boolean
+  toggleMenu: () => void
+}
 
-export const GlobalContext = createContext({} as GlobalContextValue);
+export const GlobalContext = createContext({} as GlobalContextValue)
 
 export function GlobalProvider({ children }: GlobalProviderProps) {
-  const isTarget = useMediaQuery(767);
+  const isTarget = useMediaQuery(767)
 
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(false)
 
   function toggleMenu() {
-    setCollapsed(!collapsed);
+    setCollapsed(!collapsed)
   }
-
-  console.log(isTarget);
 
   useEffect(() => {
     if (!isTarget) {
-      setCollapsed(false);
+      setCollapsed(false)
     } else {
-      setCollapsed(true);
+      setCollapsed(true)
     }
-  }, [isTarget]);
+  }, [isTarget])
 
   return (
-    <GlobalContext.Provider value={{ collapsed, toggleMenu }}>
+    <GlobalContext.Provider value={{ collapsed, toggleMenu, isTarget }}>
       {children}
     </GlobalContext.Provider>
-  );
+  )
 }

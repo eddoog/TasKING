@@ -1,12 +1,12 @@
-import { GlobalContext } from "@/context/GlobalProvider";
+import { GlobalContext } from "@/context/GlobalProvider"
 import {
   ArrowRightIcon,
   CheckCircledIcon,
   CrossCircledIcon,
   ExitIcon,
-} from "@radix-ui/react-icons";
-import { ArrowLeftIcon, HomeIcon } from "lucide-react";
-import { useContext, useState } from "react";
+} from "@radix-ui/react-icons"
+import { ArrowLeftIcon, HomeIcon } from "lucide-react"
+import { useContext, useState } from "react"
 
 const menu = [
   {
@@ -24,21 +24,21 @@ const menu = [
     title: "Completed!",
     icon: <CheckCircledIcon className="w-5 h-5" />,
   },
-];
+]
 
 export function Sidebar() {
-  const { collapsed, toggleMenu } = useContext(GlobalContext);
+  const { collapsed, toggleMenu } = useContext(GlobalContext)
 
-  const [activeTab, setActiveTab] = useState("All Tasks");
+  const [activeTab, setActiveTab] = useState("All Tasks")
 
   return (
     <nav
-      className={`md:relative md:w-[15rem] bg-[#212121] md:border-bg2 text-[#6c7983] md:h-full fixed h-[calc(100vh-2rem)] z-50 transition-sidebar rounded-2xl lg:py-8 ${
+      className={`md:relative md:w-[15rem] bg-container border-2 border-solid border-sidebar-link text-[#6c7983] md:h-full fixed h-[calc(100vh-2rem)] z-50 transition-sidebar rounded-2xl lg:py-8 ${
         collapsed ? "translate-x-[-107%]" : "translate-x-0"
       }`}
     >
       <button
-        className="md:hidden py-[0.40rem] px-[0.5rem] absolute -right-[38px] top-[1.8rem] rounded-tr-2xl rounded-br-2xl bg-[#212121] border-sidebar flex items center"
+        className="md:hidden py-[0.40rem] px-[0.5rem] absolute -right-[40.25px] top-[1.8rem] rounded-tr-2xl rounded-br-2xl bg-container border-sidebar flex items center"
         onClick={toggleMenu}
       >
         {collapsed ? (
@@ -73,7 +73,7 @@ export function Sidebar() {
                                 : ""
                             }`}
                 onClick={() => {
-                  setActiveTab(item.title);
+                  setActiveTab(item.title)
                 }}
               >
                 <span className="flex items-center">{item.icon}</span>
@@ -81,7 +81,7 @@ export function Sidebar() {
                   {item.title}
                 </p>
               </li>
-            );
+            )
           })}
         </ul>
         <div
@@ -101,5 +101,5 @@ export function Sidebar() {
         </div>
       </div>
     </nav>
-  );
+  )
 }
