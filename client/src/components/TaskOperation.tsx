@@ -57,8 +57,6 @@ export default function TaskOperation(
     },
   })
 
-  console.log(watch())
-
   function onSubmit(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     const { name, description, status, dueDate } = watch()
     if (!name) {

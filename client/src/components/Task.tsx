@@ -1,9 +1,14 @@
 import { TaskStatus, Task as Type } from "@/lib/type"
 import { Pencil2Icon, TrashIcon } from "@radix-ui/react-icons"
 import TaskOperation from "./TaskOperation"
+import TaskDelete from "./TaskDelete"
 
 export default function Task(props: React.PropsWithChildren<Type>) {
-  const { name, description, dueDate, status } = props
+  const { id, name, description, dueDate, status } = props
+
+  function onDelete() {
+    console.log("Delete " + id)
+  }
 
   return (
     <div className="py-[1.2rem] px-4 rounded-2xl bg-sidebar-link shadow-item border-2 border-solid border-sidebar-link md:h-[16rem] flex flex-col gap-2">
@@ -31,9 +36,11 @@ export default function Task(props: React.PropsWithChildren<Type>) {
             <Pencil2Icon className="w-5 h-5" />
           </button>
         </TaskOperation>
-        <button className="border-none outline-none cursor-pointer text-[1.4rem] text-task-foreground">
-          <TrashIcon className="w-5 h-5" />
-        </button>
+        <TaskDelete onClick={onDelete}>
+          <button className="border-none outline-none cursor-pointer text-[1.4rem] text-task-foreground">
+            <TrashIcon className="w-5 h-5" />
+          </button>
+        </TaskDelete>
       </div>
     </div>
   )
