@@ -109,16 +109,12 @@ export default class TaskService {
   }
 
   private validateDTO(dto: CreateTaskDTO | UpdateTaskDTO) {
-    const { description, dueDate } = dto
+    const { description } = dto
 
     if (description && description.length < 3) {
       throw new HttpBadRequestError(
         'Description must be at least 3 characters long'
       )
-    }
-
-    if (dueDate && dueDate < new Date()) {
-      throw new HttpBadRequestError('Due date must be in the future')
     }
   }
 }
