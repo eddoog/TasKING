@@ -9,7 +9,7 @@ const controller = new Controller()
 task.get('/', controller.getTasks)
 task.get('/:taskId', controller.getTaskByID)
 task.post(
-  '/create/:taskId',
+  '/create',
   RequestValidator.validate(CreateTaskDTO),
   controller.createTask
 )
