@@ -22,8 +22,7 @@
     yarn docker-up
     ```
 
-4.  If you wish not to use docker, you can skip this step, but you need to install mysql on your machine.
-    And setup the database and table manually. You can refer to the script below.
+4.  If you wish not to use docker, you need to install mysql on your machine. Then, setup the database and table manually. You can refer to the script below.
 
         Create database named `tasking` on your mysql server (using command line or GUI) by running this script
 
@@ -65,19 +64,19 @@
 
 --- Client
 
-6. Go to client directory, you can add new terminal or new tab on your terminal
+1. Go to client directory, you can add new terminal or new tab on your terminal
 
     ```sh
     yarn install
     ```
 
-7. Create .env file in the client root folder and fill it with the following environment variables
+2. Create .env file in the client root folder and fill it with the following environment variables
 
     ```sh
     VITE_API_URL=http://localhost:3001
     ```
 
-8. Run the client
+3. Run the client
 
     ```sh
      yarn dev
