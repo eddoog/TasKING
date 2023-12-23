@@ -1,8 +1,10 @@
-> Documentation On Progress
+> How to run this project
 
 ## Installation
 
 > Make sure you have installed the LTS node version on https://nodejs.org/en or at least have node version >= 20.0.0. You can check your node version by typing `node -v` on your terminal. If you don't have the correct node version, you can refer to the link above.
+
+> Make sure you have installed yarn on your machine. You can check your yarn version by typing `yarn -v` on your terminal. If you don't have yarn, you can install it by typing `npm install -g yarn` on your terminal.
 
 1. Clone this repository
 
