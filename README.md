@@ -38,7 +38,7 @@
 6. Create .env file in the client root folder and fill it with the following environment variables
 
     ```sh
-     API_URL=http://localhost:3001
+    VITE_API_URL=http://localhost:3001
     ```
 
 7. Run the client
