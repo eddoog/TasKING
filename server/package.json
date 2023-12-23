@@ -5,6 +5,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon --exec \"ts-node -r tsconfig-paths/register\" ./src/index.ts",
+    "docker-up": "docker compose up mysql -d",
+    "docker-down": "docker compose rm mysql -s -f -v",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
