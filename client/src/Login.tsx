@@ -1,3 +1,4 @@
+import { useContext, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { Button } from "./components/ui/button"
 import {
@@ -10,6 +11,9 @@ import {
 } from "./components/ui/card"
 import { Input } from "./components/ui/input"
 import { Label } from "./components/ui/label"
+import { GlobalContext } from "./context/GlobalProvider"
+import { AuthRequest, GetCookieToken } from "./lib/request"
+import { useNavigate } from "react-router-dom"
 
 type FormValues = {
   email: string
@@ -17,6 +21,9 @@ type FormValues = {
 }
 
 export default function Login() {
+  const { setIsAuthenticated, toast } = useContext(GlobalContext)
+  const navigate = useNavigate()
+
   const {
     register,
     handleSubmit,
@@ -28,8 +35,21 @@ export default function Login() {
     },
   })
 
-  function onSubmit(data: FormValues) {
-    console.log(data)
+  useEffect(() => {
+    const token = GetCookieToken()
+    if (token) {
+      navigate("/")
+    }
+  }, [navigate])
+
+  async function onSubmit(data: FormValues) {
+    await AuthRequest(
+      "auth/login",
+      JSON.stringify(data),
+      toast,
+      setIsAuthenticated,
+      navigate
+    )
   }
 
   return (

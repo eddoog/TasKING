@@ -1,7 +1,7 @@
+import { GlobalContext } from "@/context/GlobalProvider"
 import { PlusIcon } from "@radix-ui/react-icons"
-import { Fragment } from "react"
+import { Fragment, useContext } from "react"
 import Task from "./Task"
-import { tasks } from "@/lib/type"
 import TaskOperation from "./TaskOperation"
 
 type Props = {
@@ -9,6 +9,8 @@ type Props = {
 }
 
 export function Tasks({ title }: Props) {
+  const { tasks } = useContext(GlobalContext)
+
   return (
     <div className="relative p-8 w-full flex-1 bg-container border-2 border-solid border-sidebar-link rounded-2xl h-full overflow-y-auto">
       <h1 className="text-clamph1 font-extrabold relative after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-12 after:h-1 after:bg-task-underline rounded-[0.5rem]">

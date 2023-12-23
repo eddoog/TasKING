@@ -7,6 +7,7 @@ import "./index.css"
 import Login from "./Login.tsx"
 import NotFound from "./NotFound.tsx"
 import Register from "./Register.tsx"
+import { Toaster } from "./components/ui/toaster.tsx"
 
 const router = createBrowserRouter([
   {
@@ -30,7 +31,8 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <GlobalProvider>
-      <RouterProvider router={router} fallbackElement={<NotFound />} />{" "}
+      <RouterProvider router={router} fallbackElement={<NotFound />} />
+      <Toaster />
     </GlobalProvider>
   </React.StrictMode>
 )

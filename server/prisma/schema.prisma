@@ -34,5 +34,5 @@ model Task {
 
 enum Status {
   INCOMPLETE
-  COMPLETE
+  COMPLETED
 }

@@ -1,4 +1,6 @@
 import { GlobalContext } from "@/context/GlobalProvider"
+import { RemoveCookieToken } from "@/lib/request"
+import { ActiveTab } from "@/lib/type"
 import {
   ArrowRightIcon,
   CheckCircledIcon,
@@ -6,30 +8,32 @@ import {
   ExitIcon,
 } from "@radix-ui/react-icons"
 import { ArrowLeftIcon, HomeIcon } from "lucide-react"
-import { useContext, useState } from "react"
+import { useContext } from "react"
+import { useNavigate } from "react-router-dom"
 
 const menu = [
   {
     id: 1,
-    title: "All Tasks",
+    title: ActiveTab.ALL_TASKS,
     icon: <HomeIcon className="w-5 h-5" />,
   },
   {
     id: 2,
-    title: "Incomplete!",
+    title: ActiveTab.INCOMPLETE,
     icon: <CrossCircledIcon className="w-5 h-5" />,
   },
   {
     id: 3,
-    title: "Completed!",
+    title: ActiveTab.COMPLETED,
     icon: <CheckCircledIcon className="w-5 h-5" />,
   },
 ]
 
 export function Sidebar() {
-  const { collapsed, toggleMenu } = useContext(GlobalContext)
+  const { collapsed, activeTab, setActiveTab, toggleMenu, user, setInitial } =
+    useContext(GlobalContext)
 
-  const [activeTab, setActiveTab] = useState("All Tasks")
+  const navigate = useNavigate()
 
   return (
     <nav
@@ -54,7 +58,7 @@ export function Sidebar() {
                 transition-all duration-500 ease-linear rounded-2xl border-bg2 opacity-20 hover:opacity-100 group-hover:opacity-100"
           ></div>
           <h1 className="text-[1.2rem] flex flex-col leading-[1.4rem] relative z-50 text-center w-full lg:py-6 md:py-2 py-2">
-            Alfredo Austin
+            {user ? user.name : "Anonymous"}
           </h1>
         </div>
         <ul>
@@ -78,7 +82,7 @@ export function Sidebar() {
               >
                 <span className="flex items-center">{item.icon}</span>
                 <p className="font-medium transition-all duration-300 ease-in-out z-10 leading-[0px]">
-                  {item.title}
+                  {item.title.slice(0, 1) + item.title.slice(1).toLowerCase()}
                 </p>
               </li>
             )
@@ -93,6 +97,11 @@ export function Sidebar() {
             hover:after:w-full before:absolute before:content-[''] before:right-0 before:top-0
             before:h-full before:bg-sidebar-active before:rounded-bl-[5px] before:rounded-tl-[5px]
             "
+          onClick={() => {
+            RemoveCookieToken()
+            setInitial()
+            navigate("/login")
+          }}
         >
           <ExitIcon className="w-5 h-5 flex items-center" />
           <p className="font-medium transition-all duration-300 ease-in-out z-10 leading-[0px]">

@@ -10,6 +10,10 @@ import {
 } from "./components/ui/card"
 import { Input } from "./components/ui/input"
 import { Label } from "./components/ui/label"
+import { useContext, useEffect } from "react"
+import { GlobalContext } from "./context/GlobalProvider"
+import { useNavigate } from "react-router-dom"
+import { AuthRequest, GetCookieToken } from "./lib/request"
 
 type FormValues = {
   email: string
@@ -18,6 +22,9 @@ type FormValues = {
 }
 
 export default function Register() {
+  const { setIsAuthenticated, toast } = useContext(GlobalContext)
+  const navigate = useNavigate()
+
   const {
     register,
     handleSubmit,
@@ -30,8 +37,21 @@ export default function Register() {
     },
   })
 
-  function onSubmit(data: FormValues) {
-    console.log(data)
+  useEffect(() => {
+    const token = GetCookieToken()
+    if (token) {
+      navigate("/")
+    }
+  }, [navigate])
+
+  async function onSubmit(data: FormValues) {
+    await AuthRequest(
+      "auth/register",
+      JSON.stringify(data),
+      toast,
+      setIsAuthenticated,
+      navigate
+    )
   }
   return (
     <form

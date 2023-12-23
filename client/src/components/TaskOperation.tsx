@@ -27,19 +27,23 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "./ui/sheet"
+import { AuthenticatedFetch } from "@/lib/request"
+import { useToast } from "./ui/use-toast"
 
 export default function TaskOperation(
   props: React.PropsWithChildren<{
     children: React.ReactNode
     operation: "create" | "update"
+    id?: string
     name?: string
     description?: string
     status?: TaskStatus
     dueDate?: Date
   }>
 ) {
-  const { isTarget } = useContext(GlobalContext)
-  const { children, operation, name, description, status, dueDate } = props
+  const { isTarget, setTasks } = useContext(GlobalContext)
+  const { children, operation, id, name, description, status, dueDate } = props
+  const { toast } = useToast()
 
   const {
     register,
@@ -57,7 +61,9 @@ export default function TaskOperation(
     },
   })
 
-  function onSubmit(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+  async function onSubmit(
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) {
     const { name, description, status, dueDate } = watch()
     if (!name) {
       setError("name", {
@@ -95,10 +101,70 @@ export default function TaskOperation(
       return
     }
 
-    if (operation === "create") {
-      console.log("create")
-    } else {
-      console.log("update")
+    try {
+      if (operation === "create") {
+        const res = await AuthenticatedFetch("task/create", {
+          method: "POST",
+          body: JSON.stringify({
+            name,
+            description,
+            status,
+            dueDate,
+          }),
+        })
+
+        const data = await res.json()
+
+        if (data.success == false) {
+          toast({
+            title: "Error",
+            description: data.message,
+            duration: 5000,
+          })
+        } else {
+          const task = data.data as Task
+          toast({
+            title: "Success",
+            description: "Task created successfully.",
+            duration: 5000,
+          })
+          setTasks((prev) => [...prev, task])
+        }
+      } else if (operation === "update" && id) {
+        const res = await AuthenticatedFetch(`task/update/${id}`, {
+          method: "PATCH",
+          body: JSON.stringify({
+            name,
+            description,
+            status,
+            dueDate,
+          }),
+        })
+
+        const data = await res.json()
+
+        if (data.success == false) {
+          toast({
+            title: "Error",
+            description: data.message,
+            duration: 5000,
+          })
+        } else {
+          const task = data.data as Task
+          toast({
+            title: "Success",
+            description: "Task updated successfully.",
+            duration: 5000,
+          })
+          setTasks((prev) => [...prev.filter((task) => task.id !== id), task])
+        }
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Something went wrong. Please try again later.",
+        duration: 5000,
+      })
     }
   }
 
@@ -133,12 +199,12 @@ export default function TaskOperation(
                 },
               })}
             />
-            {errors.name && (
-              <span className="md:text-base text-sm text-destructive">
-                {errors.name.message}
-              </span>
-            )}
           </div>
+          {errors.name && (
+            <span className="md:text-base text-sm text-destructive">
+              {errors.name.message}
+            </span>
+          )}
           <div className="grid grid-cols-1 md:grid-cols-4 items-center gap-4">
             <Label htmlFor="description">Description</Label>
             <Input
@@ -154,12 +220,12 @@ export default function TaskOperation(
                 },
               })}
             />
-            {errors.name && (
-              <span className="md:text-base text-sm text-destructive">
-                {errors.name.message}
-              </span>
-            )}
           </div>
+          {errors.description && (
+            <span className="md:text-base text-sm text-destructive w-full">
+              {errors.description.message}
+            </span>
+          )}
           <div className="grid grid-cols-1 md:grid-cols-4 items-center gap-4">
             <Label htmlFor="status">Status</Label>
             <Select
@@ -174,15 +240,15 @@ export default function TaskOperation(
               </SelectTrigger>
               <SelectContent className="bg-container">
                 <SelectItem value="INCOMPLETE">Incomplete</SelectItem>
-                <SelectItem value="COMPLETE">Complete</SelectItem>
+                <SelectItem value="COMPLETED">Completed</SelectItem>
               </SelectContent>
             </Select>
-            {errors.status && (
-              <span className="md:text-base text-sm text-destructive">
-                {errors.status.message}
-              </span>
-            )}
           </div>
+          {errors.status && (
+            <span className="md:text-base text-sm text-destructive">
+              {errors.status.message}
+            </span>
+          )}
           <div className="grid grid-cols-1 md:grid-cols-4 items-center gap-4">
             <Label htmlFor="status">Due Date</Label>
             <Popover>
@@ -233,12 +299,12 @@ export default function TaskOperation(
                 </div>
               </PopoverContent>
             </Popover>
-            {errors.dueDate && (
-              <span className="md:text-base text-sm text-destructive">
-                {errors.dueDate.message}
-              </span>
-            )}
           </div>
+          {errors.dueDate && (
+            <span className="md:text-base text-sm text-destructive">
+              {errors.dueDate.message}
+            </span>
+          )}
         </div>
         <SheetFooter>
           <SheetClose asChild>

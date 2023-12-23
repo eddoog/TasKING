@@ -9,7 +9,7 @@ import {
 
 enum TaskStatus {
   INCOMPLETE = 'INCOMPLETE',
-  COMPLETE = 'COMPLETE',
+  COMPLETED = 'COMPLETED',
 }
 
 class CreateTaskDTO {
